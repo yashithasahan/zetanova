@@ -1,0 +1,29 @@
+<?php
+
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () { return view('pages.index'); });
+Route::get('/404', function () { return view('pages.404'); });
+Route::get('/balloons', function () { return view('pages.balloons'); });
+Route::get('/birthdays', function () { return view('pages.birthdays'); });
+Route::get('/bouncy', function () { return view('pages.bouncy'); });
+Route::get('/kids', function () { return view('pages.kids'); });
+Route::get('/launch', function () { return view('pages.launch'); });
+Route::get('/lighting', function () { return view('pages.lighting'); });
+Route::get('/party-console', function () { return view('pages.party-console'); });
+Route::get('/sound', function () { return view('pages.sound'); });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('inventory', App\Http\Controllers\InventoryController::class);
+    Route::resource('users', App\Http\Controllers\UserController::class);
+});
+
+require __DIR__.'/auth.php';
