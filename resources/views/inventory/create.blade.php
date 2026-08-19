@@ -173,7 +173,7 @@
         dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
         dropzone.addEventListener('drop', e => { dropzone.classList.remove('drag-over'); addFiles(e.dataTransfer.files); });
         dropzone.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+        fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; sync(); });
 
         function addFiles(list) {
             errorsDiv.innerHTML = '';
