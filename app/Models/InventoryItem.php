@@ -13,4 +13,9 @@ class InventoryItem extends Model
         'price',
         'category',
     ];
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
 }

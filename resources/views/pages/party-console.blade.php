@@ -451,8 +451,9 @@ select.form-input{appearance:none;}
 </div><!-- /app -->
 
 <div class="toast" id="toast"></div>
-
-<script src="data/products.js"></script>
+<script>
+    const productsData = @json($productsData);
+</script>
 <script>
 // ── CURSOR ──
 const cdot = document.getElementById('cdot');
@@ -462,7 +463,7 @@ document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
 (function anim(){cdot.style.left=mx+'px';cdot.style.top=my+'px';rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cring.style.left=rx+'px';cring.style.top=ry+'px';requestAnimationFrame(anim);})();
 
 // ── INVENTORY DATA ──
-const INVENTORY = typeof productsData !== 'undefined' ? productsData.map((p, i) => {
+const INVENTORY = productsData.map((p, i) => {
   const cat = (p.Category || 'other').toLowerCase();
   let emoji = '📦';
   if (cat === 'plinths') emoji = '🏛️';

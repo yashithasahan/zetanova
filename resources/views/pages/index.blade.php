@@ -2081,7 +2081,7 @@ footer {
   Party Console — Build Your Quote
 </a>
 
-<script src="data/products.js"></script>
+<script>const productsData = @json($productsData ?? []);</script>
 <script>
 /* ── LOADER ── */
 window.addEventListener('load', () => {
@@ -2147,8 +2147,12 @@ function renderProducts(filterCat) {
   const filtered = filterCat === 'All' ? allProducts : allProducts.filter(p => p.Category === filterCat);
   
   filtered.forEach(p => {
-    const card = document.createElement('div');
+    const card = document.createElement('a');
     card.className = 'prod-card';
+    card.href = '/products/' + p.id;
+    card.style.textDecoration = 'none';
+    card.style.color = 'inherit';
+    card.style.display = 'block';
     card.innerHTML = `
       <div class="prod-img" style="background:url('${p.Photo || ''}') center/cover no-repeat #F5EEE8"></div>
       <div class="prod-overlay"></div>
@@ -2158,14 +2162,14 @@ function renderProducts(filterCat) {
       </div>
       <div class="prod-foot">
         <span class="prod-price">${p['Unit Price '] ? 'LKR ' + p['Unit Price '].toLocaleString() : 'Price on request'}</span>
-        <button class="prod-enquire" onclick="showPage('contact')">Enquire →</button>
+        <span class="prod-enquire">Enquire →</span>
       </div>
     `;
     prodGrid.appendChild(card);
   });
 }
 
-if (prodGrid && typeof productsData !== 'undefined') {
+if (prodGrid) {
   allProducts = productsData;
   renderProducts('All');
 }

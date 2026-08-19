@@ -3,25 +3,27 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () { return view('pages.index'); });
+Route::get('/', [App\Http\Controllers\FrontendController::class, 'index']);
 Route::get('/404', function () { return view('pages.404'); });
-Route::get('/balloons', function () { return view('pages.balloons'); });
-Route::get('/birthdays', function () { return view('pages.birthdays'); });
-Route::get('/bouncy', function () { return view('pages.bouncy'); });
-Route::get('/kids', function () { return view('pages.kids'); });
-Route::get('/launch', function () { return view('pages.launch'); });
-Route::get('/lighting', function () { return view('pages.lighting'); });
-Route::get('/party-console', function () { return view('pages.party-console'); });
-Route::get('/sound', function () { return view('pages.sound'); });
+Route::get('/products/{id}', [App\Http\Controllers\FrontendController::class, 'product']);
+Route::get('/bouncy', [App\Http\Controllers\FrontendController::class, 'bouncy']);
+Route::get('/balloons', [App\Http\Controllers\FrontendController::class, 'balloons']);
+Route::get('/birthdays', [App\Http\Controllers\FrontendController::class, 'birthdays']);
+Route::get('/kids', [App\Http\Controllers\FrontendController::class, 'kids']);
+Route::get('/lighting', [App\Http\Controllers\FrontendController::class, 'lighting']);
+Route::get('/sound', [App\Http\Controllers\FrontendController::class, 'sound']);
+Route::get('/party-console', [App\Http\Controllers\FrontendController::class, 'partyConsole']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::prefix('zetoa96')->middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/inventory/{inventory}', [App\Http\Controllers\InventoryController::class, 'destroy'])->name('inventory.destroy');
+    Route::delete('/inventory/image/{image}', [App\Http\Controllers\InventoryController::class, 'destroyImage'])->name('inventory.image.destroy');
     Route::resource('inventory', App\Http\Controllers\InventoryController::class);
     Route::resource('users', App\Http\Controllers\UserController::class);
 });

@@ -95,57 +95,28 @@
     <h2 class="display d3" style="margin-bottom:52px;">Four castles,<br><em style="color:var(--rose);font-style:italic;">endless fun.</em></h2>
     <div class="prod-grid">
 
-      <div class="prod-card">
-        <div class="prod-img" style="background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:64px;">🏰</div>
+      @forelse($products as $product)
+      <a href="/products/{{ $product->id }}" style="text-decoration:none;color:inherit;display:block;" class="prod-card">
+        <div class="prod-img" style="background:var(--cream2);display:flex;align-items:center;justify-content:center;height:180px;overflow:hidden;">
+            @if($product->images->count() > 0)
+                <img src="{{ Storage::url($product->images->first()->image_path) }}" alt="{{ $product->name }}" style="width:100%;height:100%;object-fit:cover;">
+            @else
+                <div style="font-size:64px;">🏰</div>
+            @endif
+        </div>
         <div class="prod-body">
-          <div class="prod-tag">Classic</div>
-          <div class="prod-name">Classic Bouncy Castle</div>
-          <div class="prod-desc">The original — a standard 3×3 m bouncy castle in bright primary colours. Perfect for garden parties and indoor venues alike.</div>
+          <div class="prod-tag">{{ $product->category }}</div>
+          <div class="prod-name">{{ $product->name }}</div>
+          <div class="prod-desc">{{ $product->description }}</div>
           <div class="prod-foot">
-            <span class="prod-price">LKR 8,500 <span style="font-size:11px;font-weight:400;color:var(--ink3);">/ day</span></span>
-            <a href="/" class="btn btn-outline" style="font-size:11px;padding:8px 16px;">Book →</a>
+            <span class="prod-price">LKR {{ number_format($product->price) }} <span style="font-size:11px;font-weight:400;color:var(--ink3);">/ day</span></span>
+            <span class="btn btn-outline" style="font-size:11px;padding:8px 16px;">View →</span>
           </div>
         </div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-img" style="background:var(--rose-lt);display:flex;align-items:center;justify-content:center;font-size:64px;">👸</div>
-        <div class="prod-body">
-          <div class="prod-tag">Girls' Favourite</div>
-          <div class="prod-name">Princess Castle</div>
-          <div class="prod-desc">Pink towers, castle turrets, and princess arch entrance. Comes with a slide built in — royalty-approved.</div>
-          <div class="prod-foot">
-            <span class="prod-price">LKR 9,500 <span style="font-size:11px;font-weight:400;color:var(--ink3);">/ day</span></span>
-            <a href="/" class="btn btn-outline" style="font-size:11px;padding:8px 16px;">Book →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-img" style="background:var(--mint);display:flex;align-items:center;justify-content:center;font-size:64px;">🌋</div>
-        <div class="prod-body">
-          <div class="prod-tag">Action-Packed</div>
-          <div class="prod-name">Adventure Combo</div>
-          <div class="prod-desc">Climbing wall, slide, obstacle tunnel, and bounce zone in one unit. Great for mixed-age groups and energetic kids.</div>
-          <div class="prod-foot">
-            <span class="prod-price">LKR 11,000 <span style="font-size:11px;font-weight:400;color:var(--ink3);">/ day</span></span>
-            <a href="/" class="btn btn-outline" style="font-size:11px;padding:8px 16px;">Book →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-img" style="background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:64px;">💦</div>
-        <div class="prod-body">
-          <div class="prod-tag">Summer Special</div>
-          <div class="prod-name">Water Slide Combo</div>
-          <div class="prod-desc">A full inflatable water slide with splash pool — the ultimate summer party centrepiece. Garden or poolside use.</div>
-          <div class="prod-foot">
-            <span class="prod-price">LKR 13,000 <span style="font-size:11px;font-weight:400;color:var(--ink3);">/ day</span></span>
-            <a href="/" class="btn btn-outline" style="font-size:11px;padding:8px 16px;">Book →</a>
-          </div>
-        </div>
-      </div>
+      </a>
+      @empty
+        <p style="text-align: center; width: 100%; color: var(--ink3);">More products coming soon...</p>
+      @endforelse
 
     </div>
   </div>
